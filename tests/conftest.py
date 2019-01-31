@@ -11,6 +11,7 @@ from async_generator import asynccontextmanager
 import hypothesis
 from pathlib import Path
 
+from parsec.logging import configure_logging
 from parsec.types import BackendAddr, OrganizationID
 from parsec.core import CoreConfig
 from parsec.core.logged_core import logged_core_factory
@@ -52,6 +53,11 @@ def hypothesis_settings(request):
         max_examples=pytest.config.getoption("--hypothesis-max-examples"),
         derandomize=pytest.config.getoption("--hypothesis-derandomize"),
     )
+
+
+@pytest.fixture(scope="session")
+def parsec_logging():
+    configure_logging()
 
 
 def pytest_runtest_setup(item):
